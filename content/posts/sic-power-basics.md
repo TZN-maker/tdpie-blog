@@ -7,7 +7,7 @@ tags = ['SiC', '功率器件']
 author = '博主'
 views = 756
 comments = 0
-  cover.relative = false
+cover = '/images/post4.svg'
 +++
 
-本文介绍 SiC 功率元器件的基础知识，包括材料特性、器件类型和应用...
+本文介绍 SiC 功率元器件的基础知识，包括材料特性、器件类型和应用。

@@ -7,7 +7,7 @@ tags = ['SiC', '应用笔记']
 author = '博主'
 views = 623
 comments = 0
-  cover.relative = false
+cover = '/images/post5.svg'
 +++
 
-本文整理了 SiC 功率器件和模块的应用笔记...
+本文整理了 SiC 功率器件和模块的应用笔记。

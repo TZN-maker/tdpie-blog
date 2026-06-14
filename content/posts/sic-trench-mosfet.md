@@ -7,7 +7,7 @@ tags = ['SiC', 'MOSFET', '功率器件']
 author = '博主'
 views = 892
 comments = 0
-  cover.relative = false
+cover = '/images/post3.svg'
 +++
 
-SiC Trench MOSFET 是碳化硅功率器件的重要类型，采用沟槽栅结构...
+SiC Trench MOSFET 是碳化硅功率器件的重要类型，采用沟槽栅结构。

@@ -7,7 +7,7 @@ tags = ['机器学习', 'AI']
 author = '博主'
 views = 1567
 comments = 0
-  cover.relative = false
+cover = '/images/post8.svg'
 +++
 
-机器学习是人工智能的核心技术之一，本文汇总其核心概念...
+机器学习是人工智能的核心技术之一，本文汇总其核心概念。

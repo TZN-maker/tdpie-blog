@@ -7,7 +7,7 @@ tags = ['SiC', '材料']
 author = '博主'
 views = 445
 comments = 0
-  cover.relative = false
+cover = '/images/post9.svg'
 +++
 
-SiC 材料具有优异的物理和电学特性...
+SiC 材料具有优异的物理和电学特性。

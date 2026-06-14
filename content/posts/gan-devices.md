@@ -7,7 +7,7 @@ tags = ['GaN', '氮化镓']
 author = '博主'
 views = 1102
 comments = 0
-  cover.relative = false
+cover = '/images/post6.svg'
 +++
 
-氮化镓（GaN）是另一种重要的第三代半导体材料...
+氮化镓（GaN）是另一种重要的第三代半导体材料。

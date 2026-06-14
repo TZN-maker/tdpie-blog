@@ -1,0 +1,106 @@
+{{- define "main" -}}
+
+<article class="post-single">
+    <header class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <div class="post-meta">
+            <span class="author">{{ .Params.author | default "博主" }}</span>
+            <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+            {{- with .Params.categories -}}
+            <span class="category">
+                {{- range . -}}
+                <a href="{{ (urlize (printf "categories/%s" .)) | absURL }}">{{ . }}</a>
+                {{- end -}}
+            </span>
+            {{- end -}}
+            <span class="views" id="post-views">{{ .Params.views | default "0" }}</span>
+            <span class="comments">{{ .Params.comments | default "0" }}</span>
+        </div>
+    </header>
+
+    {{- if .Params.cover.image }}
+    <div class="post-cover">
+        <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Title }}">
+    </div>
+    {{- end }}
+
+    <div class="post-content">
+        {{- .Content -}}
+    </div>
+
+    {{- with .Params.tags }}
+    <div class="tags">
+        {{- range . -}}
+        <a href="{{ (urlize (printf "tags/%s" .)) | absURL }}">{{ . }}</a>
+        {{- end -}}
+    </div>
+    {{- end }}
+
+    <!-- Post Navigation -->
+    {{- if or .NextInSection .PrevInSection }}
+    <div class="post-nav">
+        {{- with .PrevInSection }}
+        <a href="{{ .Permalink }}" class="prev" title="{{ .Title }}">{{ .Title }}</a>
+        {{- end }}
+        {{- with .NextInSection }}
+        <a href="{{ .Permalink }}" class="next" title="{{ .Title }}">{{ .Title }}</a>
+        {{- end }}
+    </div>
+    {{- end }}
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h3>发表评论</h3>
+        <div class="comment-form">
+            <textarea id="comment-content" placeholder="说点什么吧..."></textarea>
+            <div>
+                <input type="text" id="comment-name" placeholder="名称(*)" required>
+                <input type="text" id="comment-email" placeholder="邮箱">
+                <button onclick="submitComment()">提交</button>
+            </div>
+        </div>
+        <ul class="comment-list" id="comment-list">
+            <li class="comment-item" style="color:#999;text-align:center;padding:20px;">暂无评论</li>
+        </ul>
+    </div>
+</article>
+
+<script>
+// View counter
+(function() {
+    var key = 'views_{{ .RelPermalink }}';
+    var views = parseInt(localStorage.getItem(key) || '0');
+    views++;
+    localStorage.setItem(key, views);
+    var el = document.getElementById('post-views');
+    if (el) el.textContent = views;
+})();
+
+// Comment system
+function submitComment() {
+    var content = document.getElementById('comment-content').value.trim();
+    var name = document.getElementById('comment-name').value.trim();
+    if (!content || !name) {
+        alert('请填写名称和评论内容');
+        return;
+    }
+    var list = document.getElementById('comment-list');
+    var empty = list.querySelector('li[style*=\"暂无评论\"]');
+    if (empty) empty.remove();
+    var li = document.createElement('li');
+    li.className = 'comment-item';
+    li.innerHTML = '<span class="comment-author">' + escapeHtml(name) + '</span>' +
+        '<span class="comment-date">' + new Date().toLocaleString() + '</span>' +
+        '<div class="comment-content">' + escapeHtml(content) + '</div>';
+    list.appendChild(li);
+    document.getElementById('comment-content').value = '';
+}
+
+function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+
+{{- end -}}

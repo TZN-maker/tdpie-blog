@@ -1,11 +1,11 @@
 baseURL = 'https://tdpie.tech/'
 languageCode = 'zh-cn'
 defaultContentLanguage = 'zh-cn'
-title = 'TDPie Tech Blog'
+title = '智于博客'
 theme = 'PaperMod'
 
 [params]
-  author = 'TDPie'
+  author = '博主'
   description = '半导体技术博客，IT技术博客'
   defaultTheme = 'light'
   ShowReadingTime = true
@@ -15,6 +15,7 @@ theme = 'PaperMod'
   ShowCodeCopyButtons = true
   ShowToc = true
   TocOpen = false
+  comments = true
 
   [params.homeInfoParams]
     Title = ''
@@ -31,34 +32,32 @@ theme = 'PaperMod'
   weight = 10
 
 [[menus.main]]
-  identifier = 'posts'
-  name = '文章'
-  url = '/posts/'
+  identifier = 'notes'
+  name = '随心手记'
+  url = '/categories/随心手记/'
   weight = 20
 
 [[menus.main]]
-  identifier = 'tags'
-  name = '标签'
-  url = '/tags/'
+  identifier = 'semiconductor'
+  name = '半导体行业'
+  url = '/categories/半导体行业/'
   weight = 30
 
 [[menus.main]]
-  identifier = 'archives'
-  name = '归档'
-  url = '/archives/'
+  identifier = 'it-ai'
+  name = 'IT技术和AI'
+  url = '/categories/IT技术和AI/'
   weight = 40
 
 [[menus.main]]
-  identifier = 'search'
-  name = '搜索'
-  url = '/search/'
-  weight = 50
-
-[[menus.main]]
   identifier = 'about'
-  name = '关于'
+  name = '关于我'
   url = '/about/'
-  weight = 60
+  weight = 50
 
 [outputs]
   home = ['HTML', 'RSS', 'JSON']
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'

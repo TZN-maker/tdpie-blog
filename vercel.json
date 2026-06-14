@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "framework": "hugo",
   "buildCommand": "hugo --gc --minify",
   "outputDirectory": "public"

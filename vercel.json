@@ -1,1 +1,5 @@
-{`n  "framework": "hugo",`n  "buildCommand": "hugo --gc --minify",`n  "outputDirectory": "public"`n}
+{
+  "framework": "hugo",
+  "buildCommand": "hugo --gc --minify",
+  "outputDirectory": "public"
+}

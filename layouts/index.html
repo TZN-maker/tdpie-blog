@@ -1,0 +1,76 @@
+{{- define "main" -}}
+{{- $posts := where .Site.RegularPages "Type" "in" (slice "posts") -}}
+{{- $pages := .Paginate $posts -}}
+
+<!-- Hero Banner -->
+<section class="hero-banner">
+    <img src="/images/hero-banner.jpg" alt="TDPie Tech Blog Banner" loading="eager">
+    <div class="hero-overlay">
+        <h1>{{ .Site.Title }}</h1>
+        <p>{{ .Site.Params.description }}</p>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="posts">
+    {{- $first := true -}}
+    {{- range $pages.Pages -}}
+    {{- if $first -}}
+    <article class="first-entry">
+        <div class="entry-header">
+            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+        </div>
+        <div class="entry-content">
+            <p>{{ .Summary }}</p>
+        </div>
+        <div class="post-meta">
+            <span>{{ .Date.Format "2006-01-02" }}</span>
+            {{- if .Params.Author -}}<span>{{ .Params.Author }}</span>{{- end -}}
+            {{- with .Params.tags -}}
+            <div class="tags">
+                {{- range . -}}
+                <a href="{{ (urlize (printf "tags/%s" .)) | absURL }}">{{ . }}</a>
+                {{- end -}}
+            </div>
+            {{- end -}}
+        </div>
+    </article>
+    {{- $first = false -}}
+    {{- else -}}
+    <article class="post-entry">
+        <div class="entry-header">
+            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+        </div>
+        <div class="entry-content">
+            <p>{{ .Summary }}</p>
+            <a href="{{ .Permalink }}" class="read-more">查看全文 &rarr;</a>
+        </div>
+        <div class="post-meta">
+            <span>{{ .Date.Format "2006-01-02" }}</span>
+            {{- if .Params.Author -}}<span>{{ .Params.Author }}</span>{{- end -}}
+            {{- with .Params.tags -}}
+            <div class="tags">
+                {{- range . -}}
+                <a href="{{ (urlize (printf "tags/%s" .)) | absURL }}">{{ . }}</a>
+                {{- end -}}
+            </div>
+            {{- end -}}
+        </div>
+    </article>
+    {{- end -}}
+    {{- end -}}
+</div>
+
+{{- if $pages -}}
+<div class="pagination">
+    {{- if $pages.HasPrev -}}
+        <a href="{{ $pages.Prev.URL }}">上一页</a>
+    {{- end -}}
+    <span class="current">{{ $pages.PageNumber }}</span>
+    {{- if $pages.HasNext -}}
+        <a href="{{ $pages.Next.URL }}">下一页</a>
+    {{- end -}}
+</div>
+{{- end -}}
+
+{{- end -}}

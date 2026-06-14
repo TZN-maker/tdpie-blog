@@ -6,21 +6,59 @@ theme = 'PaperMod'
 
 [params]
   author = 'TDPie'
-  description = 'Personal Tech Blog'
-  defaultTheme = 'auto'
+  description = '半导体技术博客，IT技术博客'
+  defaultTheme = 'light'
   ShowReadingTime = true
   ShowShareButtons = false
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
 
-[params.homeInfoParams]
-  Title = 'Welcome to TDPie Tech Blog'
-  Content = 'A personal blog for tech exploration'
+  [params.homeInfoParams]
+    Title = ''
+    Content = ''
 
-[[params.socialIcons]]
-  name = 'github'
-  url = 'https://github.com'
+  [[params.socialIcons]]
+    name = 'github'
+    url = 'https://github.com/TZN-maker'
+
+[[menus.main]]
+  identifier = 'home'
+  name = '首页'
+  url = '/'
+  weight = 10
+
+[[menus.main]]
+  identifier = 'posts'
+  name = '文章'
+  url = '/posts/'
+  weight = 20
+
+[[menus.main]]
+  identifier = 'tags'
+  name = '标签'
+  url = '/tags/'
+  weight = 30
+
+[[menus.main]]
+  identifier = 'archives'
+  name = '归档'
+  url = '/archives/'
+  weight = 40
+
+[[menus.main]]
+  identifier = 'search'
+  name = '搜索'
+  url = '/search/'
+  weight = 50
+
+[[menus.main]]
+  identifier = 'about'
+  name = '关于'
+  url = '/about/'
+  weight = 60
 
 [outputs]
   home = ['HTML', 'RSS', 'JSON']

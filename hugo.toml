@@ -1,12 +1,12 @@
-baseURL = 'https://tdpie.tech/'
+﻿baseURL = 'https://tdpie.tech/'
 languageCode = 'zh-cn'
 defaultContentLanguage = 'zh-cn'
-title = '智于博客'
+title = '鏅轰簬鍗氬'
 theme = 'PaperMod'
 
 [params]
-  author = '博主'
-  description = '半导体技术博客，IT技术博客'
+  author = '鍗氫富'
+  description = '鍗婂浣撴妧鏈崥瀹紝IT鎶€鏈崥瀹?
   defaultTheme = 'light'
   ShowReadingTime = true
   ShowShareButtons = false
@@ -27,31 +27,31 @@ theme = 'PaperMod'
 
 [[menus.main]]
   identifier = 'home'
-  name = '首页'
+  name = '棣栭〉'
   url = '/'
   weight = 10
 
 [[menus.main]]
   identifier = 'notes'
-  name = '随心手记'
-  url = '/categories/随心手记/'
+  name = '闅忓績鎵嬭'
+  url = '/categories/闅忓績鎵嬭/'
   weight = 20
 
 [[menus.main]]
   identifier = 'semiconductor'
-  name = '半导体行业'
-  url = '/categories/半导体行业/'
+  name = '鍗婂浣撹涓?
+  url = '/categories/鍗婂浣撹涓?'
   weight = 30
 
 [[menus.main]]
   identifier = 'it-ai'
-  name = 'IT技术和AI'
-  url = '/categories/IT技术和AI/'
+  name = 'IT鎶€鏈拰AI'
+  url = '/categories/IT鎶€鏈拰AI/'
   weight = 40
 
 [[menus.main]]
   identifier = 'about'
-  name = '关于我'
+  name = '鍏充簬鎴?
   url = '/about/'
   weight = 50
 

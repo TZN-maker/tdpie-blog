@@ -7,7 +7,6 @@ tags = ['SiC', 'MOSFET', '功率器件']
 author = '博主'
 views = 892
 comments = 0
-cover.image = '/images/post11.svg'
   cover.relative = false
 +++
 

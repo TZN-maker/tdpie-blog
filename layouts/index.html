@@ -28,10 +28,10 @@
             <span class="comments">{{ .Params.comments | default "0" }}</span>
         </div>
         <div class="entry-content">
-            {{- if .Params.cover.image }}
+            {{- if .Params.cover }}
             <div class="entry-cover">
                 <a href="{{ .Permalink }}">
-                    <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Title }}" loading="lazy">
+                    <img src="{{ .Params.cover | absURL }}" alt="{{ .Title }}" loading="lazy">
                 </a>
             </div>
             {{- end }}

@@ -18,9 +18,9 @@
         </div>
     </header>
 
-    {{- if .Params.cover.image }}
+    {{- if .Params.cover }}
     <div class="post-cover">
-        <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Title }}">
+        <img src="{{ .Params.cover | absURL }}" alt="{{ .Title }}">
     </div>
     {{- end }}
 

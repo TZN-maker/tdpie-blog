@@ -7,7 +7,6 @@ tags = ['氧化镓', 'Ga2O3']
 author = '博主'
 views = 834
 comments = 0
-cover.image = '/images/post3.svg'
   cover.relative = false
 +++
 

@@ -7,7 +7,6 @@ tags = ['GaN', '氮化镓']
 author = '博主'
 views = 1102
 comments = 0
-cover.image = '/images/post4.svg'
   cover.relative = false
 +++
 

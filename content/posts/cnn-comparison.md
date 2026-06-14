@@ -7,7 +7,6 @@ tags = ['CNN', '深度学习']
 author = '博主'
 views = 2134
 comments = 0
-cover.image = '/images/post2.svg'
   cover.relative = false
 +++
 

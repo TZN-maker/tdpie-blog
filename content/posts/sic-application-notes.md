@@ -7,7 +7,6 @@ tags = ['SiC', '应用笔记']
 author = '博主'
 views = 623
 comments = 0
-cover.image = '/images/post7.svg'
   cover.relative = false
 +++
 

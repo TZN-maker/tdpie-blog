@@ -7,7 +7,6 @@ tags = ['SiC', '材料']
 author = '博主'
 views = 445
 comments = 0
-cover.image = '/images/post8.svg'
   cover.relative = false
 +++
 

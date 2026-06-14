@@ -7,7 +7,6 @@ tags = ['机器学习', 'AI']
 author = '博主'
 views = 1567
 comments = 0
-cover.image = '/images/post5.svg'
   cover.relative = false
 +++
 

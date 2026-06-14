@@ -7,7 +7,6 @@ tags = ['SiC', '功率器件']
 author = '博主'
 views = 756
 comments = 0
-cover.image = '/images/post9.svg'
   cover.relative = false
 +++
 

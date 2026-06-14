@@ -1,0 +1,26 @@
+baseURL = 'https://tdpie.tech/'
+languageCode = 'zh-cn'
+defaultContentLanguage = 'zh-cn'
+title = 'TDPie Tech Blog'
+theme = 'PaperMod'
+
+[params]
+  author = 'TDPie'
+  description = 'Personal Tech Blog'
+  defaultTheme = 'auto'
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+
+[params.homeInfoParams]
+  Title = 'Welcome to TDPie Tech Blog'
+  Content = 'A personal blog for tech exploration'
+
+[[params.socialIcons]]
+  name = 'github'
+  url = 'https://github.com'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']

@@ -5,25 +5,60 @@ title = 'TDPie Tech'
 theme = 'PaperMod'
 
 [params]
-  author = '博主'
-  description = '半导体技术博客，IT技术博客'
-  defaultTheme = 'light'
+  author = 'TDPie'
+  description = '半导体技术博客，IT技术博客 - 深度解析半导体行业前沿技术与AI应用'
+  defaultTheme = 'auto'
   ShowReadingTime = true
-  ShowShareButtons = false
+  ShowShareButtons = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowToc = true
   TocOpen = false
+  ShowWordCount = true
   comments = true
+  ShowSearch = true
 
   [params.homeInfoParams]
-    Title = ''
-    Content = ''
+    Title = "👋 Hi, I'm TDPie"
+    Content = """
+半导体技术爱好者 / IT技术探索者
+专注半导体前沿技术与人工智能应用，分享技术深度解析与行业洞察。"""
+
+    [params.homeInfoParams.SocialIcons]
+      github = 'https://github.com/TZN-maker'
 
   [[params.socialIcons]]
     name = 'github'
     url = 'https://github.com/TZN-maker'
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 100
+    threshold = 0.4
+    minMatchCharLength = 2
+    keys = ["title", "permalink", "content", "tags"]
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    noClasses = true
+    style = 'monokai'
+    tabWidth = 4
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+  [markup.tableOfContents]
+    endLevel = 4
+    ordered = true
+    startLevel = 2
 
 [[menus.main]]
   identifier = 'home'

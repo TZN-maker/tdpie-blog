@@ -1,0 +1,49 @@
+{{- define "main" -}}
+<div class="search-container">
+    <h1 class="search-title">搜索</h1>
+    <input type="text" id="search-input" class="search-input" placeholder="输入关键词搜索文章..." autocomplete="off">
+    <div id="search-results" class="search-results"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var searchInput = document.getElementById('search-input');
+    var searchResults = document.getElementById('search-results');
+    var postsData = [];
+
+    fetch('/index.json').then(function(r) { return r.json(); }).then(function(data) {
+        postsData = data;
+        var fuse = new Fuse(postsData, {
+            keys: ['title', 'content', 'tags', 'categories'],
+            threshold: 0.3,
+            minMatchCharLength: 2,
+            includeScore: true
+        });
+
+        searchInput.addEventListener('input', function() {
+            var query = searchInput.value.trim();
+            if (query.length < 2) {
+                searchResults.innerHTML = '';
+                return;
+            }
+            var results = fuse.search(query).slice(0, 10);
+            if (results.length === 0) {
+                searchResults.innerHTML = '<p style="color:var(--text-tertiary);text-align:center;padding:40px 0;">未找到相关文章</p>';
+                return;
+            }
+            var html = '';
+            results.forEach(function(r) {
+                var item = r.item;
+                var excerpt = item.content ? item.content.substring(0, 150).replace(/<[^>]*>/g, '') + '...' : '';
+                html += '<a href="' + item.permalink + '" class="search-result-item">' +
+                    '<div>' + item.title + '</div>' +
+                    (excerpt ? '<p>' + excerpt + '</p>' : '') +
+                    '</a>';
+            });
+            searchResults.innerHTML = html;
+        });
+    });
+});
+</script>
+{{- end -}}

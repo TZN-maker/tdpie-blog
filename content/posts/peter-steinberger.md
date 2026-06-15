@@ -7,7 +7,8 @@ tags = ['AI', '人物']
 author = '博主'
 views = 1004
 comments = 0
-cover = '/images/post2.svg'
+[cover]
+  image = '/images/post2.svg'
 +++
 
 ## 引言

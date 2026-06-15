@@ -1,14 +1,26 @@
 <footer class="footer">
     <div class="footer-content">
-        <h3>{{ site.Title }} &copy;{{ now.Year }} 版权所有</h3>
-        <h4>Powered By Hugo . Theme by TDPie .</h4>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <span class="footer-divider"></span>
+            <a href="/categories/">分类</a>
+            <span class="footer-divider"></span>
+            <a href="/tags/">标签</a>
+            <span class="footer-divider"></span>
+            <a href="/about/">关于</a>
+        </div>
+        <p class="footer-copyright">{{ site.Title }} &copy; {{ now.Year }} All Rights Reserved.</p>
+        <p class="footer-powered">Powered by Hugo &middot; Theme by TDPie</p>
     </div>
 </footer>
 
-<a href="#top" id="top-link" class="top-link" title="Go to Top">&#8679;</a>
+<a href="#top" id="top-link" class="top-link" title="回到顶部">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</a>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Back to top
     var topLink = document.getElementById('top-link');
     window.addEventListener('scroll', function() {
         if (window.scrollY > 300) {
@@ -21,5 +33,28 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         window.scrollTo({top: 0, behavior: 'smooth'});
     });
+
+    // Theme toggle
+    var themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            var html = document.documentElement;
+            var current = html.getAttribute('data-theme') || 'auto';
+            var next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    }
+
+    // Mobile menu toggle
+    var menuToggle = document.getElementById('mobile-menu-toggle');
+    var menu = document.getElementById('menu');
+    if (menuToggle && menu) {
+        menuToggle.addEventListener('click', function() {
+            menu.classList.toggle('mobile-open');
+            menuToggle.classList.toggle('active');
+        });
+    }
 });
 </script>

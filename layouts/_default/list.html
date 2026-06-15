@@ -1,0 +1,65 @@
+{{- define "main" -}}
+<div class="list-container">
+    <header class="list-header">
+        <h1 class="list-title">
+            {{- if eq .Kind "taxonomy" -}}
+                {{ .Title }}
+            {{- else if eq .Kind "term" -}}
+                {{ .Title }}
+            {{- else -}}
+                {{ .Title }}
+            {{- end -}}
+        </h1>
+        {{- if eq .Kind "taxonomy" -}}
+            <p class="list-desc">共 {{ len .Data.Terms }} 个{{ .Title }}</p>
+        {{- else if eq .Kind "term" -}}
+            <p class="list-desc">共 {{ len .Pages }} 篇文章</p>
+        {{- end -}}
+    </header>
+
+    {{- if eq .Kind "taxonomy" -}}
+    <div class="terms-tags">
+        {{- range .Data.Terms.Alphabetical -}}
+        <a href="{{ .Page.Permalink }}">
+            {{ .Page.Title }} <span class="term-count">({{ len .Pages }})</span>
+        </a>
+        {{- end -}}
+    </div>
+    {{- else -}}
+    <div class="posts-grid">
+        {{- range .Pages -}}
+        <article class="post-card">
+            {{- if .Params.cover.image }}
+            <a href="{{ .Permalink }}" class="post-card-cover">
+                <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Title }}" loading="lazy">
+            </a>
+            {{- end }}
+            <div class="post-card-body">
+                <div class="post-card-meta">
+                    <span class="meta-date">{{ .Date.Format "2006-01-02" }}</span>
+                    {{- with .Params.categories }}
+                    <span class="meta-category">
+                        {{- range first 1 . -}}
+                        {{ . }}
+                        {{- end -}}
+                    </span>
+                    {{- end }}
+                </div>
+                <h2 class="post-card-title">
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                </h2>
+                <p class="post-card-summary">{{ .Summary }}</p>
+                <div class="post-card-footer">
+                    <span class="meta-reading-time">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        {{ .ReadingTime }} min
+                    </span>
+                    <a href="{{ .Permalink }}" class="read-more-link">阅读全文 &rsaquo;</a>
+                </div>
+            </div>
+        </article>
+        {{- end -}}
+    </div>
+    {{- end -}}
+</div>
+{{- end -}}

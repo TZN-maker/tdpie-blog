@@ -1,106 +1,160 @@
 {{- define "main" -}}
-
 <article class="post-single">
     <header class="post-header">
         <h1 class="post-title">{{ .Title }}</h1>
         <div class="post-meta">
-            <span class="author">{{ .Params.author | default "博主" }}</span>
-            <span class="date">{{ .Date.Format "2006-01-02" }}</span>
-            {{- with .Params.categories -}}
-            <span class="category">
+            <span class="meta-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                {{ .Date.Format "2006-01-02" }}
+            </span>
+            {{- with .Params.categories }}
+            <span class="meta-item meta-categories">
                 {{- range . -}}
                 <a href="{{ (urlize (printf "categories/%s" .)) | absURL }}">{{ . }}</a>
                 {{- end -}}
             </span>
             {{- end -}}
-            <span class="views" id="post-views">{{ .Params.views | default "0" }}</span>
-            <span class="comments">{{ .Params.comments | default "0" }}</span>
+            {{ if .ReadingTime }}
+            <span class="meta-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                {{ .ReadingTime }} min
+            </span>
+            {{ end }}
+            {{ if .WordCount }}
+            <span class="meta-item">{{ .WordCount }} 字</span>
+            {{ end }}
         </div>
     </header>
 
-    {{- if .Params.cover }}
+    {{- if .Params.cover.image }}
     <div class="post-cover">
-        <img src="{{ .Params.cover | absURL }}" alt="{{ .Title }}">
+        <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Title }}" loading="lazy">
     </div>
     {{- end }}
 
-    <div class="post-content">
-        {{- .Content -}}
+    <div class="post-body">
+        {{- if .Params.toc | default false -}}
+        {{- else if and .TableOfContents (gt (len .TableOfContents) 0) -}}
+        <aside class="post-toc" id="toc">
+            <div class="toc-title">目录</div>
+            {{ .TableOfContents }}
+        </aside>
+        {{- end -}}
+        <div class="post-content">
+            {{- .Content -}}
+        </div>
     </div>
 
     {{- with .Params.tags }}
-    <div class="tags">
+    <div class="post-tags">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
         {{- range . -}}
-        <a href="{{ (urlize (printf "tags/%s" .)) | absURL }}">{{ . }}</a>
+        <a href="{{ (urlize (printf "tags/%s" .)) | absURL }}" class="tag">{{ . }}</a>
         {{- end -}}
     </div>
     {{- end }}
+
+    <!-- Share Buttons -->
+    <div class="share-buttons">
+        <span class="share-label">分享：</span>
+        <a href="https://twitter.com/intent/tweet?text={{ .Title }}&url={{ .Permalink }}" target="_blank" rel="noopener" title="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        </a>
+    </div>
+
+    <!-- Like Button -->
+    <div class="like-section">
+        <button class="like-btn" id="like-btn" onclick="toggleLike()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span id="like-count">0</span>
+        </button>
+    </div>
 
     <!-- Post Navigation -->
     {{- if or .NextInSection .PrevInSection }}
     <div class="post-nav">
         {{- with .PrevInSection }}
-        <a href="{{ .Permalink }}" class="prev" title="{{ .Title }}">{{ .Title }}</a>
+        <a href="{{ .Permalink }}" class="post-nav-item prev">
+            <span class="nav-label">上一篇</span>
+            <span class="nav-title">{{ .Title }}</span>
+        </a>
         {{- end }}
         {{- with .NextInSection }}
-        <a href="{{ .Permalink }}" class="next" title="{{ .Title }}">{{ .Title }}</a>
+        <a href="{{ .Permalink }}" class="post-nav-item next">
+            <span class="nav-label">下一篇</span>
+            <span class="nav-title">{{ .Title }}</span>
+        </a>
         {{- end }}
     </div>
     {{- end }}
 
-    <!-- Comments Section -->
+    <!-- Comments Section (Giscus) -->
     <div class="comments-section">
-        <h3>发表评论</h3>
-        <div class="comment-form">
-            <textarea id="comment-content" placeholder="说点什么吧..."></textarea>
-            <div>
-                <input type="text" id="comment-name" placeholder="名称(*)" required>
-                <input type="text" id="comment-email" placeholder="邮箱">
-                <button onclick="submitComment()">提交</button>
-            </div>
-        </div>
-        <ul class="comment-list" id="comment-list">
-            <li class="comment-item" style="color:#999;text-align:center;padding:20px;">暂无评论</li>
-        </ul>
+        <h3 class="comments-title">评论</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="TZN-maker/tdpie-blog"
+            data-repo-id="R_kgDOJ3rQxg"
+            data-category="General"
+            data-category-id="DIC_kwDOJ3rQxs4Ckvhg"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="preferred_color_scheme"
+            data-lang="zh-CN"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async>
+        </script>
     </div>
 </article>
 
 <script>
-// View counter
+// Like button
 (function() {
-    var key = 'views_{{ .RelPermalink }}';
-    var views = parseInt(localStorage.getItem(key) || '0');
-    views++;
-    localStorage.setItem(key, views);
-    var el = document.getElementById('post-views');
-    if (el) el.textContent = views;
+    var key = 'likes_{{ .RelPermalink }}';
+    var liked = localStorage.getItem(key + '_liked') === 'true';
+    var count = parseInt(localStorage.getItem(key) || '0');
+    if (liked) count = Math.max(count, 1);
+    var btn = document.getElementById('like-btn');
+    var countEl = document.getElementById('like-count');
+    if (btn && liked) btn.classList.add('liked');
+    if (countEl) countEl.textContent = count;
+    window.toggleLike = function() {
+        liked = !liked;
+        count += liked ? 1 : -1;
+        localStorage.setItem(key + '_liked', liked);
+        localStorage.setItem(key, count);
+        if (btn) btn.classList.toggle('liked', liked);
+        if (countEl) countEl.textContent = count;
+    };
 })();
 
-// Comment system
-function submitComment() {
-    var content = document.getElementById('comment-content').value.trim();
-    var name = document.getElementById('comment-name').value.trim();
-    if (!content || !name) {
-        alert('请填写名称和评论内容');
-        return;
+// TOC highlight on scroll
+(function() {
+    var toc = document.getElementById('toc');
+    if (!toc) return;
+    var links = toc.querySelectorAll('a');
+    var headings = [];
+    links.forEach(function(link) {
+        var id = link.getAttribute('href').substring(1);
+        var el = document.getElementById(id);
+        if (el) headings.push({el: el, link: link});
+    });
+    if (headings.length === 0) return;
+    function update() {
+        var scrollY = window.scrollY + 100;
+        var current = headings[0];
+        for (var i = 0; i < headings.length; i++) {
+            if (headings[i].el.offsetTop <= scrollY) current = headings[i];
+        }
+        links.forEach(function(l) { l.classList.remove('active'); });
+        if (current) current.link.classList.add('active');
     }
-    var list = document.getElementById('comment-list');
-    var empty = list.querySelector('li[style*=\"暂无评论\"]');
-    if (empty) empty.remove();
-    var li = document.createElement('li');
-    li.className = 'comment-item';
-    li.innerHTML = '<span class="comment-author">' + escapeHtml(name) + '</span>' +
-        '<span class="comment-date">' + new Date().toLocaleString() + '</span>' +
-        '<div class="comment-content">' + escapeHtml(content) + '</div>';
-    list.appendChild(li);
-    document.getElementById('comment-content').value = '';
-}
-
-function escapeHtml(text) {
-    var div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
+    window.addEventListener('scroll', update, {passive: true});
+    update();
+})();
 </script>
 
 {{- end -}}

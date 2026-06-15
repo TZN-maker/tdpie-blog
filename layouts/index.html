@@ -1,70 +1,83 @@
 {{- define "main" -}}
 {{- $posts := where .Site.RegularPages "Type" "in" (slice "posts") -}}
-{{- $pages := .Paginate $posts 10 -}}
+{{- $pages := .Paginate $posts 9 -}}
 
-<!-- Hero Banner -->
-<section class="hero-banner">
-    <img src="/images/banner.jpg" alt="智于博客 - 半导体技术博客，IT技术博客" loading="eager">
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-inner">
+        <div class="hero-avatar">
+            <div class="avatar-placeholder">T</div>
+        </div>
+        <h1 class="hero-name">{{ site.Title }}</h1>
+        <p class="hero-bio">半导体技术爱好者 &middot; IT技术探索者</p>
+        <p class="hero-desc">专注半导体前沿技术与人工智能应用，分享技术深度解析与行业洞察</p>
+        <div class="hero-social">
+            <a href="https://github.com/TZN-maker" target="_blank" rel="noopener" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+        </div>
+    </div>
 </section>
 
 <!-- Main Content -->
-<div class="posts">
-    {{- range $pages.Pages -}}
-    <article class="post-entry">
-        <div class="entry-header">
-            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
-        </div>
-        <div class="post-meta">
-            <span class="author">{{ .Params.author | default "博主" }}</span>
-            <span class="date">{{ .Date.Format "2006-01-02" }}</span>
-            {{- with .Params.categories -}}
-            <span class="category">
-                {{- range . -}}
-                <a href="{{ (urlize (printf "categories/%s" .)) | absURL }}">{{ . }}</a>
-                {{- end -}}
-            </span>
-            {{- end -}}
-            <span class="views">{{ .Params.views | default "0" }}</span>
-            <span class="comments">{{ .Params.comments | default "0" }}</span>
-        </div>
-        <div class="entry-content">
-            {{- if .Params.cover }}
-            <div class="entry-cover">
-                <a href="{{ .Permalink }}">
-                    <img src="{{ .Params.cover | absURL }}" alt="{{ .Title }}" loading="lazy">
-                </a>
-            </div>
+<div class="main-container">
+    <div class="posts-grid">
+        {{- range $pages.Pages -}}
+        <article class="post-card">
+            {{- if .Params.cover.image }}
+            <a href="{{ .Permalink }}" class="post-card-cover">
+                <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Title }}" loading="lazy">
+            </a>
             {{- end }}
-            <div>
-                <p>{{ .Summary }}</p>
-                <a href="{{ .Permalink }}" class="read-more">查看全文 &rsaquo;</a>
+            <div class="post-card-body">
+                <div class="post-card-meta">
+                    <span class="meta-date">{{ .Date.Format "2006-01-02" }}</span>
+                    {{- with .Params.categories }}
+                    <span class="meta-category">
+                        {{- range first 1 . -}}
+                        {{ . }}
+                        {{- end -}}
+                    </span>
+                    {{- end }}
+                </div>
+                <h2 class="post-card-title">
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                </h2>
+                <p class="post-card-summary">{{ .Summary }}</p>
+                <div class="post-card-footer">
+                    <span class="meta-reading-time">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        {{ .ReadingTime }} min
+                    </span>
+                    <a href="{{ .Permalink }}" class="read-more-link">阅读全文 &rsaquo;</a>
+                </div>
             </div>
-        </div>
-    </article>
-    {{- end -}}
-</div>
-
-<!-- Pagination -->
-{{- if gt $pages.TotalPages 1 -}}
-<div class="pagination">
-    {{- if $pages.HasPrev -}}
-        <a href="{{ $pages.Prev.URL }}">首页</a>
-        <a href="{{ $pages.Prev.URL }}">上页</a>
-    {{- end -}}
-    
-    {{- range $pages.Pagers -}}
-        {{- if eq . $pages -}}
-            <span class="current">{{ .PageNumber }}</span>
-        {{- else -}}
-            <a href="{{ .URL }}">{{ .PageNumber }}</a>
+        </article>
         {{- end -}}
-    {{- end -}}
-    
-    {{- if $pages.HasNext -}}
-        <a href="{{ $pages.Next.URL }}">下页</a>
-        <a href="{{ (index $pages.Pagers (sub (len $pages.Pagers) 1)).URL }}">尾页</a>
+    </div>
+
+    <!-- Pagination -->
+    {{- if gt $pages.TotalPages 1 -}}
+    <div class="pagination">
+        {{- if $pages.HasPrev -}}
+        <a href="{{ $pages.Prev.URL }}" class="page-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </a>
+        {{- end -}}
+        {{- range $pages.Pagers -}}
+            {{- if eq . $pages -}}
+                <span class="page-btn current">{{ .PageNumber }}</span>
+            {{- else -}}
+                <a href="{{ .URL }}" class="page-btn">{{ .PageNumber }}</a>
+            {{- end -}}
+        {{- end -}}
+        {{- if $pages.HasNext -}}
+        <a href="{{ $pages.Next.URL }}" class="page-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        {{- end -}}
+    </div>
     {{- end -}}
 </div>
-{{- end -}}
 
 {{- end -}}

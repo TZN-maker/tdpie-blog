@@ -20,26 +20,21 @@ theme = 'PaperMod'
   ShowSearch = true
 
   [params.homeInfoParams]
-    Title = "👋 Hi, I'm TDPie"
-    Content = """
-半导体技术爱好者 / IT技术探索者
-专注半导体前沿技术与人工智能应用，分享技术深度解析与行业洞察。"""
+    Title = "Hi, I am TDPie"
+    Content = "半导体技术爱好者 / IT技术探索者\n专注半导体前沿技术与人工智能应用，分享技术深度解析与行业洞察。"
 
-    [params.homeInfoParams.SocialIcons]
-      github = 'https://github.com/TZN-maker'
+[[params.socialIcons]]
+  name = 'github'
+  url = 'https://github.com/TZN-maker'
 
-  [[params.socialIcons]]
-    name = 'github'
-    url = 'https://github.com/TZN-maker'
-
-  [params.fuseOpts]
-    isCaseSensitive = false
-    shouldSort = true
-    location = 0
-    distance = 100
-    threshold = 0.4
-    minMatchCharLength = 2
-    keys = ["title", "permalink", "content", "tags"]
+[params.fuseOpts]
+  isCaseSensitive = false
+  shouldSort = true
+  location = 0
+  distance = 100
+  threshold = 0.4
+  minMatchCharLength = 2
+  keys = ["title", "permalink", "content", "tags"]
 
 [markup]
   [markup.highlight]
@@ -67,21 +62,21 @@ theme = 'PaperMod'
   weight = 10
 
 [[menus.main]]
-  identifier = 'notes'
-  name = '随心手记'
-  url = '/categories/随心手记/'
+  identifier = 'tech'
+  name = '半导体技术精帖'
+  url = '/categories/半导体技术精帖/'
   weight = 20
 
 [[menus.main]]
-  identifier = 'semiconductor'
-  name = '半导体行业'
-  url = '/categories/半导体行业/'
+  identifier = 'semi'
+  name = '第三代半导体'
+  url = '/categories/第三代半导体/'
   weight = 30
 
 [[menus.main]]
-  identifier = 'it-ai'
-  name = 'IT技术和AI'
-  url = '/categories/IT技术和AI/'
+  identifier = 'ai'
+  name = '人工智能'
+  url = '/categories/人工智能/'
   weight = 40
 
 [[menus.main]]

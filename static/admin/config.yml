@@ -1,0 +1,49 @@
+backend:
+  name: github
+  repo: TZN-maker/tdpie-blog
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+media_folder: "static/images"
+public_folder: "/images"
+
+site_url: https://tdpie.tech
+
+locale: zh_Hans
+
+collections:
+  - name: "posts"
+    label: "文章"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false }
+      - label: "封面图"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "图片", name: "image", widget: "image", required: false }
+          - { label: "替代文字", name: "alt", widget: "string", required: false }
+      - { label: "分类", name: "categories", widget: "list", default: ["随心手记"] }
+      - { label: "标签", name: "tags", widget: "list", default: [] }
+      - { label: "摘要", name: "description", widget: "text", required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "pages"
+    label: "页面"
+    folder: "content"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false }
+      - { label: "正文", name: "body", widget: "markdown" }

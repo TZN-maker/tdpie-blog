@@ -1,4 +1,4 @@
-baseURL = 'https://tdpie.tech/'
+baseURL = 'https://www.tdpie.tech/'
 languageCode = 'zh-cn'
 defaultContentLanguage = 'zh-cn'
 title = 'TDPie Tech'
